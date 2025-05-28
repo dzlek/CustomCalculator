@@ -1,3 +1,3 @@
-import "./styles/main.scss";
-console.log("Started...");
-document.getElementById("app").innerHTML = "<h1>Started dev server</h1>";
+import './styles/main.scss'
+console.log('Started...')
+document.getElementById('app').innerHTML = '<h1>Started dev server again</h1>'

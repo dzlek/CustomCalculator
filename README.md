@@ -7,6 +7,9 @@
 OR
 
 - Run development ```npm run dev```
+- Run ESLint ```npm run lint```
+- Run Prettier ```npm run format```
+
 
 
 ### Directory Descriptions
