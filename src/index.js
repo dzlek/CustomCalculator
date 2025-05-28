@@ -1,1 +1,2 @@
 console.log("Started...");
+document.getElementById("app").innerHTML = "<h1>Optimized</h1>";
