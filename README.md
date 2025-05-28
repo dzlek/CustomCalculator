@@ -10,6 +10,8 @@ OR
 - Run ESLint ```npm run lint```
 - Run Prettier ```npm run format```
 
+A *pre-commit* Husky hook has been implemented that prevents pushing to the repository if there are any *ESLint* errors in the application.
+
 
 
 ### Directory Descriptions
