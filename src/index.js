@@ -3,14 +3,7 @@ console.log('Started...')
 document.getElementById('app').innerHTML = `
 <div class="calculator">
     <div class="head" id="head">
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
-        <button class="circle" data-color="red"></button>
+        <button class="theme"></button>
     </div>
 
     <div class="display" id="display">0</div>
@@ -42,3 +35,9 @@ document.getElementById('app').innerHTML = `
     </div>
 </div>
 `
+
+const toggleTheme = () => {
+    document.body.classList.toggle('dark')
+}
+
+document.querySelector('.theme').addEventListener('click', toggleTheme)
