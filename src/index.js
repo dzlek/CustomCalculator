@@ -1,5 +1,5 @@
 import './styles/main.scss'
-console.log('Started...')
+
 document.getElementById('app').innerHTML = `
 <div class="calculator">
     <div class="head" id="head">
