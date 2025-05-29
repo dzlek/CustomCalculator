@@ -1,3 +1,78 @@
-h1 {
-    background-color: green;
+@use 'colors.scss';
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+    height: 100vh;
+    background: var(--background);
+}
+
+.calculator {
+    width: 310px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 20px 20px rgba(0, 0, 0, 0.3);
+    background: var(--calculator);
+    outline: 1px var(--calculator) solid;
+
+    .display {
+        color: var(--font-primary);
+        font-size: 64px;
+        padding: 4px 21px;
+        text-align: right;
+    }
+
+    .head {
+        height: 16px;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .circle {
+        display: inline-block;
+        content: '';
+        width: 19px;
+        height: 19px;
+        margin: 6px 4px;
+        border-radius: 50%;
+        background-color: red;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        [data-action] {
+            background: var(--button-action);
+        }
+
+        > button:nth-child(1),
+        > button:nth-child(2),
+        > button:nth-child(3) {
+            background: var(--button-secondary);
+        }
+
+        > button:nth-child(18) {
+            background: var(--button-primary);
+        }
+
+        > button:nth-child(17) {
+            grid-column: span 2;
+        }
+
+        button {
+            padding: 16px;
+            font-size: 26px;
+            color: var(--font-primary);
+            outline: 1px var(--calculator) solid;
+            background: var(--button-primary);
+            cursor: pointer;
+
+            &:hover {
+                background: rgb(68, 68, 68);
+            }
+        }
+    }
 }
