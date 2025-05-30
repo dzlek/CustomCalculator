@@ -3,7 +3,7 @@ import './styles/main.scss'
 document.getElementById('app').innerHTML = `
 <div class="calculator">
     <div class="head">
-        <button class="theme"></button>
+        <button class="theme">dark</button>
     </div>
 
     <div class="display" id="display">0</div>
@@ -35,12 +35,16 @@ document.getElementById('app').innerHTML = `
     </div>
 </div>
 `
+let isLight = true
+const theme = document.querySelector('.theme')
 
 const toggleTheme = () => {
     document.body.classList.toggle('dark')
+    theme.textContent = isLight ? 'light' : 'dark'
+    isLight = !isLight
 }
 
-document.querySelector('.theme').addEventListener('click', toggleTheme)
+theme.addEventListener('click', toggleTheme)
 
 const display = document.getElementById('display')
 const buttons = document.querySelectorAll('.buttons button')

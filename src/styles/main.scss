@@ -35,10 +35,11 @@ body {
     .theme {
         display: inline-block;
         content: '';
-        width: 19px;
+        width: 69px;
         height: 19px;
         margin: 6px 4px;
-        border-radius: 50%;
+        border-radius: 9px;
+        color: var(--calculator);
         background-color: var(--background);
         cursor: pointer;
     }
