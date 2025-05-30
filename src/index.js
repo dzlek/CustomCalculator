@@ -30,7 +30,7 @@ document.getElementById('app').innerHTML = `
         <button data-action="plus">+</button>
 
         <button>0</button>
-        <button data-action="comma">,</button>
+        <button data-action="dot">.</button>
         <button data-action="equal">=</button>
     </div>
 </div>
@@ -46,9 +46,9 @@ const display = document.getElementById('display')
 const buttons = document.querySelectorAll('.buttons button')
 
 let num1 = ''
-// let num2 = ''
-// let op = ''
-// let res = ''
+let num2 = ''
+let op = ''
+let res = ''
 
 buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -61,19 +61,48 @@ buttons.forEach((btn) => {
             num1 = num1 + value
             display.textContent = num1
         } else if (action === 'ac') {
-            // num1 = ''
-            // num2 = ''
-            // op = ''
+            num1 = ''
+            num2 = ''
+            op = 'ac'
+            res = '0'
             display.textContent = '0'
+        } else if (action === 'plus') {
+            num2 = num1
+            num1 = ''
+            op = '+'
+            display.textContent = value
+        } else if (action === 'minus') {
+            num2 = num1
+            num1 = ''
+            op = '-'
+            display.textContent = value
+        } else if (action === 'divide') {
+            num2 = num1
+            num1 = ''
+            op = '/'
+            display.textContent = value
+        } else if (action === 'multiply') {
+            num2 = num1
+            num1 = ''
+            op = '*'
+            display.textContent = value
+        } else if (action === 'dot' && !num1.includes('.')) {
+            num1 = num1 + (num1 ? '.' : '0.')
+            display.textContent = num1
         }
+
+        console.log(
+            'num1: ' + num1 + ' op: ' + op + ' num2: ' + num2 + ' res: ' + res
+        )
     })
 })
 
 //NOTE:+ ограничить количество вводимых символов 8
 //NOTE:+ не давать вводить два нуля подряд в начале
-//NOTE: действие сложить отнять делить умножить(по факту num2 = num1)
-//NOTE: сделать точку
+//NOTE:+ действие +сложить +отнять +делить +умножить(по факту num2 = num1)
+//NOTE:+ сделать точку(нельзя вводить 2шт)
 //NOTE: процент это просто деление на 100 num1
 //NOTE:  плюс минус это умножение num1 на -1
 //NOTE:  равно это вернуть result
+//NOTE:  возможно дописать keydown
 //NOTE:
