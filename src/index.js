@@ -2,15 +2,15 @@ import './styles/main.scss'
 
 document.getElementById('app').innerHTML = `
 <div class="calculator">
-    <div class="head" id="head">
+    <div class="head">
         <button class="theme"></button>
     </div>
 
     <div class="display" id="display">0</div>
   
     <div class="buttons">
-        <button data-action="clear">AC</button>
-        <button data-action="sign">±</button>
+        <button data-action="ac">AC</button>
+        <button data-action="plusMinus">±</button>
         <button data-action="percent">%</button>
         <button data-action="divide">÷</button>
 
@@ -22,16 +22,16 @@ document.getElementById('app').innerHTML = `
         <button>4</button>
         <button>5</button>
         <button>6</button>
-        <button data-action="subtract">-</button>
+        <button data-action="minus">-</button>
 
         <button>1</button>
         <button>2</button>
         <button>3</button>
-        <button data-action="add">+</button>
+        <button data-action="plus">+</button>
 
         <button>0</button>
-        <button data-action="dot">,</button>
-        <button data-action="equals">=</button>
+        <button data-action="comma">,</button>
+        <button data-action="equal">=</button>
     </div>
 </div>
 `
@@ -41,3 +41,39 @@ const toggleTheme = () => {
 }
 
 document.querySelector('.theme').addEventListener('click', toggleTheme)
+
+const display = document.getElementById('display')
+const buttons = document.querySelectorAll('.buttons button')
+
+let num1 = ''
+// let num2 = ''
+// let op = ''
+// let res = ''
+
+buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const action = btn.dataset.action
+        const value = btn.textContent
+
+        if (!action) {
+            if (num1.length >= 8) return
+            if (num1 === '0' && value === '0') return
+            num1 = num1 + value
+            display.textContent = num1
+        } else if (action === 'ac') {
+            // num1 = ''
+            // num2 = ''
+            // op = ''
+            display.textContent = '0'
+        }
+    })
+})
+
+//NOTE:+ ограничить количество вводимых символов 8
+//NOTE:+ не давать вводить два нуля подряд в начале
+//NOTE: действие сложить отнять делить умножить(по факту num2 = num1)
+//NOTE: сделать точку
+//NOTE: процент это просто деление на 100 num1
+//NOTE:  плюс минус это умножение num1 на -1
+//NOTE:  равно это вернуть result
+//NOTE:
