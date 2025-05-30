@@ -22,8 +22,9 @@ body {
     .display {
         color: var(--font-secondary);
         font-size: 64px;
-        padding: 4px 21px;
+        padding: 4px 21px 4px 0px;
         text-align: right;
+        transform: scaleX(0.9);
     }
 
     .head {
