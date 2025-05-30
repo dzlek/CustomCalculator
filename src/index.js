@@ -96,9 +96,9 @@ buttons.forEach((btn) => {
         } else if (action === 'plusMinus') {
             num1 = -num1
             display.textContent = num1
-        } else if (action === 'percent' && op !== 'percent') {
+        } else if (action === 'percent' && !num1.includes('.')) {
             num1 = num1 / 100
-            op = 'percent'
+            //FIX: work incorrect op = 'percent'
             display.textContent = num1
         } else if (action === 'equal') {
             switch (op) {
@@ -128,6 +128,30 @@ buttons.forEach((btn) => {
     })
 })
 
+document.addEventListener('keydown', (e) => {
+    const key = e.key
+    const map = {
+        '+': 'plus',
+        '-': 'minus',
+        '*': 'multiply',
+        '/': 'divide',
+        '%': 'percent',
+        Enter: 'equal',
+        Backspace: 'ac',
+        Delete: 'ac',
+        ',': 'dot',
+        '.': 'dot',
+    }
+
+    if (!isNaN(key)) {
+        const btn = [...buttons].find((btn) => btn.textContent === key)
+        if (btn) btn.click()
+    } else if (key in map) {
+        const btn = [...buttons].find((btn) => btn.dataset.action === map[key])
+        if (btn) btn.click()
+    }
+})
+
 //NOTE:+ ограничить количество вводимых символов 8
 //NOTE:+ не давать вводить два нуля подряд в начале
 //NOTE:+ действие +сложить +отнять +делить +умножить(по факту num2 = num1)
@@ -135,5 +159,5 @@ buttons.forEach((btn) => {
 //NOTE: + процент это просто деление на 100 num1
 //NOTE: +плюс минус это умножение num1 на -1
 //NOTE: + равно это вернуть result
-//NOTE:  возможно дописать keydown
+//NOTE: + возможно дописать keydown
 //NOTE:
