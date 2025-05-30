@@ -57,8 +57,12 @@ buttons.forEach((btn) => {
 
         if (!action) {
             if (num1.length >= 8) return
-            if (num1 === '0' && value === '0') return
-            num1 = num1 + value
+            if (num1 === '0') {
+                if (value === '0') return
+                num1 = value
+            } else {
+                num1 = num1 + value
+            }
             display.textContent = num1
         } else if (action === 'ac') {
             num1 = ''
@@ -96,6 +100,26 @@ buttons.forEach((btn) => {
             num1 = num1 / 100
             op = 'percent'
             display.textContent = num1
+        } else if (action === 'equal') {
+            switch (op) {
+                case '*':
+                    res = Number(num2) * Number(num1)
+                    num1 = res
+                    break
+                case '-':
+                    res = Number(num2) - Number(num1)
+                    num1 = res
+                    break
+                case '/':
+                    res = Number(num2) / Number(num1)
+                    num1 = res
+                    break
+                case '+':
+                    res = Number(num2) + Number(num1)
+                    num1 = res
+                    break
+            }
+            display.textContent = res
         }
 
         console.log(
@@ -110,6 +134,6 @@ buttons.forEach((btn) => {
 //NOTE:+ сделать точку(нельзя вводить 2шт)
 //NOTE: + процент это просто деление на 100 num1
 //NOTE: +плюс минус это умножение num1 на -1
-//NOTE:  равно это вернуть result
+//NOTE: + равно это вернуть result
 //NOTE:  возможно дописать keydown
 //NOTE:
