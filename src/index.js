@@ -94,13 +94,13 @@ buttons.forEach((btn) => {
             num1 = ''
             op = '*'
             display.textContent = value
-        } else if (action === 'dot' && !num1.includes('.')) {
+        } else if (action === 'dot' && !String(num1).includes('.')) {
             num1 = num1 + (num1 ? '.' : '0.')
             display.textContent = num1
         } else if (action === 'plusMinus') {
             num1 = -num1
             display.textContent = num1
-        } else if (action === 'percent' && !num1.includes('.')) {
+        } else if (action === 'percent' && !String(num1).includes('.')) {
             num1 = num1 / 100
             //FIX: work incorrect op = 'percent'
             display.textContent = num1
