@@ -92,8 +92,9 @@ buttons.forEach((btn) => {
         } else if (action === 'plusMinus') {
             num1 = -num1
             display.textContent = num1
-        } else if (action === 'percent') {
+        } else if (action === 'percent' && op !== 'percent') {
             num1 = num1 / 100
+            op = 'percent'
             display.textContent = num1
         }
 
@@ -108,7 +109,7 @@ buttons.forEach((btn) => {
 //NOTE:+ действие +сложить +отнять +делить +умножить(по факту num2 = num1)
 //NOTE:+ сделать точку(нельзя вводить 2шт)
 //NOTE: + процент это просто деление на 100 num1
-//NOTE:  +плюс минус это умножение num1 на -1
+//NOTE: +плюс минус это умножение num1 на -1
 //NOTE:  равно это вернуть result
 //NOTE:  возможно дописать keydown
 //NOTE:
