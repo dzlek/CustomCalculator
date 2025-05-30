@@ -1,34 +1,35 @@
 {
-  "name": "simplecalculator",
-  "version": "1.0.0",
-  "description": "- [link](https://docs.google.com/document/d/1zpXXeSae-BlcxPKgw3DhxZA92cspVailrPYoaXSYrW8/edit?pli=1&tab=t.0)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
-    "dev": "webpack serve --mode development",
-    "lint": "eslint src --ext .js",
-    "format": "prettier --write src",
-    "prepare": "husky"
-  },
-  "keywords": [],
-  "author": "dzlek",
-  "license": "ISC",
-  "devDependencies": {
-    "@eslint/js": "^9.27.0",
-    "css-loader": "^7.1.2",
-    "eslint": "^9.27.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.4.0",
-    "globals": "^16.2.0",
-    "html-webpack-plugin": "^5.6.3",
-    "husky": "^9.1.7",
-    "prettier": "^3.5.3",
-    "sass": "^1.89.0",
-    "sass-loader": "^16.0.5",
-    "style-loader": "^4.0.0",
-    "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.1"
-  }
+    "name": "simplecalculator",
+    "homepage": "https://dzlek.github.io/SimpleCalculator/",
+    "version": "1.0.0",
+    "description": "- [link](https://docs.google.com/document/d/1zpXXeSae-BlcxPKgw3DhxZA92cspVailrPYoaXSYrW8/edit?pli=1&tab=t.0)",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --mode production",
+        "dev": "webpack serve --mode development",
+        "lint": "eslint src --ext .js",
+        "format": "prettier --write src",
+        "prepare": "husky"
+    },
+    "keywords": [],
+    "author": "dzlek",
+    "license": "ISC",
+    "devDependencies": {
+        "@eslint/js": "^9.27.0",
+        "css-loader": "^7.1.2",
+        "eslint": "^9.27.0",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-plugin-prettier": "^5.4.0",
+        "globals": "^16.2.0",
+        "html-webpack-plugin": "^5.6.3",
+        "husky": "^9.1.7",
+        "prettier": "^3.5.3",
+        "sass": "^1.89.0",
+        "sass-loader": "^16.0.5",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.99.9",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.1"
+    }
 }
