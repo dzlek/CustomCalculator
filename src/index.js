@@ -128,16 +128,15 @@ buttons.forEach((btn) => {
             }
             display.textContent = res
         }
-
-        console.log(
-            'num1: ' + num1 + ' op: ' + op + ' num2: ' + num2 + ' res: ' + res
-        )
+        // console.log(
+        //     'num1: ' + num1 + ' op: ' + op + ' num2: ' + num2 + ' res: ' + res
+        // )
     })
 })
 
 document.addEventListener('keydown', (e) => {
     const key = e.key
-    console.log(key)
+
     const map = {
         '+': 'plus',
         '-': 'minus',
@@ -159,13 +158,3 @@ document.addEventListener('keydown', (e) => {
         if (btn) btn.click()
     }
 })
-
-//NOTE:+ ограничить количество вводимых символов 8
-//NOTE:+ не давать вводить два нуля подряд в начале
-//NOTE:+ действие +сложить +отнять +делить +умножить(по факту num2 = num1)
-//NOTE:+ сделать точку(нельзя вводить 2шт)
-//NOTE: + процент это просто деление на 100 num1
-//NOTE: +плюс минус это умножение num1 на -1
-//NOTE: + равно это вернуть result
-//NOTE: + возможно дописать keydown
-//NOTE:
