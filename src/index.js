@@ -101,8 +101,11 @@ buttons.forEach((btn) => {
             num1 = -num1
             display.textContent = num1
         } else if (action === 'percent' && !String(num1).includes('.')) {
-            num1 = num1 / 100
-            //FIX: work incorrect op = 'percent'
+            if (op === '+' || op === '-') {
+                num1 = (num1 * num2) / 100
+            } else {
+                num1 = num1 / 100
+            }
             display.textContent = num1
         } else if (action === 'equal') {
             switch (op) {
@@ -134,6 +137,7 @@ buttons.forEach((btn) => {
 
 document.addEventListener('keydown', (e) => {
     const key = e.key
+    console.log(key)
     const map = {
         '+': 'plus',
         '-': 'minus',
