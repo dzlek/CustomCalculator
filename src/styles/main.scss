@@ -24,7 +24,11 @@ body {
         font-size: 64px;
         padding: 4px 21px 4px 0px;
         text-align: right;
+        overflow-x: auto;
+        overflow-y: hidden;
         transform: scaleX(0.9);
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
 
     .head {
