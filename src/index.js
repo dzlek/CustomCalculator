@@ -1,50 +1,22 @@
 import './styles/main.scss'
 
-document.getElementById('app').innerHTML = `
-<div class="calculator">
-    <div class="head">
-        <button class="theme">dark</button>
-    </div>
+const theme = document.querySelectorAll('.theme')
 
-    <div class="display" id="display">0</div>
-  
-    <div class="buttons">
-        <button data-action="ac">AC</button>
-        <button data-action="plusMinus">±</button>
-        <button data-action="percent">%</button>
-        <button data-action="divide">÷</button>
-
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button data-action="multiply">×</button>
-
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button data-action="minus">-</button>
-
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button data-action="plus">+</button>
-
-        <button>0</button>
-        <button data-action="dot">.</button>
-        <button data-action="equal">=</button>
-    </div>
-</div>
-`
-let isLight = true
-const theme = document.querySelector('.theme')
-
-const toggleTheme = () => {
+const toggleTheme = (clickedBtn) => {
     document.body.classList.toggle('dark')
-    theme.textContent = isLight ? 'light' : 'dark'
-    isLight = !isLight
+
+    theme.forEach((btn) => {
+        if (btn === clickedBtn) {
+            btn.classList.remove('active')
+        } else {
+            btn.classList.add('active')
+        }
+    })
 }
 
-theme.addEventListener('click', toggleTheme)
+theme.forEach((btn) => {
+    btn.addEventListener('click', () => toggleTheme(btn))
+})
 
 const display = document.getElementById('display')
 const buttons = document.querySelectorAll('.buttons button')

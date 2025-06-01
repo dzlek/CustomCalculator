@@ -34,15 +34,18 @@ body {
     }
 
     .theme {
-        display: inline-block;
-        content: '';
-        width: 69px;
+        display: none;
+        width: 29px;
         height: 19px;
         margin: 6px 4px;
         border-radius: 9px;
         color: var(--calculator);
         background-color: var(--background);
         cursor: pointer;
+
+        &.active {
+            display: block;
+        }
     }
 
     .buttons {
