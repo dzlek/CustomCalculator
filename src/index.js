@@ -24,7 +24,7 @@ const buttons = document.querySelectorAll('.buttons button')
 let num1 = ''
 let num2 = ''
 let op = ''
-let res = ''
+let res = '0'
 
 buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
