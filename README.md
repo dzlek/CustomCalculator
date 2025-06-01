@@ -2,6 +2,11 @@
 - [link](https://docs.google.com/document/d/1zpXXeSae-BlcxPKgw3DhxZA92cspVailrPYoaXSYrW8/edit?pli=1&tab=t.0)
 
 ## How to run the app:
+
+- Install dependencies ```npm i```
+
+THEN
+
 - Run build ```npm run build```
 
 OR
@@ -22,7 +27,7 @@ A *pre-commit* Husky hook has been implemented that prevents pushing to the repo
   - `index.html` – Main HTML template  
   - `/styles` – CSS styles
 - `/.husky` – Git hooks managed by Husky
-- `/node_modules` – Project dependencies (auto-generated)
+- `/node_modules` – Project dependencies (auto-generated after ```npm i```)
 - `.eslintrc.cjs` – ESLint configuration file
 - `.prettierrc`, `.prettierignore` – Prettier formatting settings
 - `webpack.config.js` – Webpack build configuration
