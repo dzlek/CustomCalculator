@@ -9,6 +9,7 @@ export const initCalculator = () => {
 
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
+            btn.blur()
             const action = btn.dataset.action
             const value = btn.textContent
 
@@ -75,7 +76,10 @@ export const initCalculator = () => {
                         res = Number(num2) + Number(num1)
                         break
                 }
-                num2 = res
+
+                num1 = String(res)
+                num2 = ''
+                op = ''
                 display.textContent = res
             }
             // console.log(
