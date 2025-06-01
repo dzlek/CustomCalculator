@@ -83,21 +83,18 @@ buttons.forEach((btn) => {
             switch (op) {
                 case '*':
                     res = Number(num2) * Number(num1)
-                    num1 = res
                     break
                 case '-':
                     res = Number(num2) - Number(num1)
-                    num1 = res
                     break
                 case '/':
                     res = Number(num2) / Number(num1)
-                    num1 = res
                     break
                 case '+':
                     res = Number(num2) + Number(num1)
-                    num1 = res
                     break
             }
+            num2 = res
             display.textContent = res
         }
         // console.log(
