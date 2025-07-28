@@ -1,6 +1,5 @@
 export const initCalculator = () => {
-    // NOTE: x в степени y, 10 в
-    //степени x, 1 / x, коренеь квадратный, корень кубический, корень степени y,факториал.
+    // NOTE: x в степени y, 1 / x, коренеь квадратный, корень кубический, корень степени y,факториал.
 
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
@@ -142,6 +141,21 @@ export const initCalculator = () => {
         },
     })
 
+    function xPowerY(x, y) {
+        let result = 1
+        for (let i = 0; i < y; i++) {
+            result *= x
+        }
+        return result
+    }
+
+    const tenPowerCmd = () => ({
+        execute: () => {
+            calc.num1 = String(xPowerY(10, Number(calc.num1)))
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -181,6 +195,9 @@ export const initCalculator = () => {
                         break
                     case 'cube':
                         command = cubeCmd()
+                        break
+                    case 'ten-power':
+                        command = tenPowerCmd()
                         break
                     case 'ac':
                         command = clearCmd()
