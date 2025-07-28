@@ -1,5 +1,5 @@
 export const initCalculator = () => {
-    // NOTE:  1 / x, коренеь квадратный, корень кубический, корень степени y,факториал.
+    // NOTE:  1 / x, коренеь квадратный, корень кубический, корень степени y
 
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
@@ -168,6 +168,23 @@ export const initCalculator = () => {
         },
     })
 
+    const factorialCmd = () => ({
+        execute: () => {
+            const n = Number(calc.num1)
+            if (n < 0 || n % 1 !== 0) {
+                calc.updateDisplay('Error')
+                calc.num1 = ''
+                return
+            }
+            let result = 1
+            for (let i = 2; i <= n; i++) {
+                result *= i
+            }
+            calc.num1 = String(result)
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -214,6 +231,9 @@ export const initCalculator = () => {
                     case 'power':
                         command = powerCmd()
                         break
+                    case 'factorial':
+                        command = factorialCmd()
+                        break
                     case 'ac':
                         command = clearCmd()
                         break
@@ -240,6 +260,7 @@ export const initCalculator = () => {
             ',': 'dot',
             '.': 'dot',
             '^': 'power',
+            '!': 'factorial',
         }
 
         if (!isNaN(key)) {
