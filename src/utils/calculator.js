@@ -142,6 +142,7 @@ export const initCalculator = () => {
     })
 
     function xPowerY(x, y) {
+        if (y < 0 || y % 1 !== 0) return 'Error'
         let result = 1
         for (let i = 0; i < y; i++) {
             result *= x
