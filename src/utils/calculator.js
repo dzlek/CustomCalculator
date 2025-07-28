@@ -9,6 +9,7 @@ export const initCalculator = () => {
         op: '',
         result: '',
         display,
+        memory: 0,
         updateDisplay(value) {
             this.display.textContent = value
         },
@@ -211,6 +212,33 @@ export const initCalculator = () => {
         },
     })
 
+    const memoryClearCmd = () => ({
+        execute: () => {
+            calc.memory = 0
+        },
+    })
+
+    const memoryPlusCmd = () => ({
+        execute: () => {
+            const value = Number(calc.num1 || '0')
+            calc.memory += value
+        },
+    })
+
+    const memoryMinusCmd = () => ({
+        execute: () => {
+            const value = Number(calc.num1 || '0')
+            calc.memory -= value
+        },
+    })
+
+    const memoryRecallCmd = () => ({
+        execute: () => {
+            calc.num1 = String(calc.memory)
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -274,6 +302,18 @@ export const initCalculator = () => {
                         break
                     case 'ac':
                         command = clearCmd()
+                        break
+                    case 'mc':
+                        command = memoryClearCmd()
+                        break
+                    case 'm-plus':
+                        command = memoryPlusCmd()
+                        break
+                    case 'm-minus':
+                        command = memoryMinusCmd()
+                        break
+                    case 'm-recall':
+                        command = memoryRecallCmd()
                         break
                 }
             }
