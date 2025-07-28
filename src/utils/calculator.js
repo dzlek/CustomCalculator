@@ -1,4 +1,7 @@
 export const initCalculator = () => {
+    // NOTE: x в степени y, 10 в
+    //степени x, 1 / x, коренеь квадратный, корень кубический, корень степени y,факториал.
+
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
 
@@ -130,6 +133,15 @@ export const initCalculator = () => {
         },
     })
 
+    const cubeCmd = () => ({
+        execute: () => {
+            calc.num1 = String(
+                Number(calc.num1) * Number(calc.num1) * Number(calc.num1)
+            )
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -166,6 +178,9 @@ export const initCalculator = () => {
                         break
                     case 'square':
                         command = squareCmd()
+                        break
+                    case 'cube':
+                        command = cubeCmd()
                         break
                     case 'ac':
                         command = clearCmd()
