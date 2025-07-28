@@ -1,3 +1,4 @@
+import { xPowerY, nthRoot, factorial } from './math'
 export const initCalculator = () => {
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
@@ -143,15 +144,6 @@ export const initCalculator = () => {
         },
     })
 
-    function xPowerY(x, y) {
-        if (y < 0 || y % 1 !== 0) return 'Error'
-        let result = 1
-        for (let i = 0; i < y; i++) {
-            result *= x
-        }
-        return result
-    }
-
     const tenPowerCmd = () => ({
         execute: () => {
             calc.num1 = String(xPowerY(10, Number(calc.num1)))
@@ -178,31 +170,13 @@ export const initCalculator = () => {
 
     const factorialCmd = () => ({
         execute: () => {
-            const n = Number(calc.num1)
-            if (n < 0 || n % 1 !== 0) return
-            let result = 1
-            for (let i = 2; i <= n; i++) {
-                result *= i
+            const result = factorial(Number(calc.num1))
+            if (result !== 'Error') {
+                calc.num1 = String(result)
+                calc.updateDisplay(calc.num1)
             }
-            calc.num1 = String(result)
-            calc.updateDisplay(calc.num1)
         },
     })
-
-    function nthRoot(x, y) {
-        if (y <= 0 || (x < 0 && y % 2 === 0)) return 'Error'
-
-        let guess = x / y
-        const epsilon = 1e-10
-
-        const absDiff = (a, b) => (a > b ? a - b : b - a)
-
-        while (absDiff(xPowerY(guess, y), x) > epsilon) {
-            guess = ((y - 1) * guess + x / xPowerY(guess, y - 1)) / y
-        }
-
-        return parseFloat(guess.toFixed(10))
-    }
 
     const nthRootCmd = () => ({
         execute: () => {
