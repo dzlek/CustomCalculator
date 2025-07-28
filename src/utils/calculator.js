@@ -2,98 +2,151 @@ export const initCalculator = () => {
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
 
-    let num1 = ''
-    let num2 = ''
-    let op = ''
-    let res = '0'
+    const calc = {
+        num1: '',
+        num2: '',
+        op: '',
+        result: '',
+        display,
+        updateDisplay(value) {
+            this.display.textContent = value
+        },
+        clear() {
+            this.num1 = ''
+            this.num2 = ''
+            this.op = ''
+            this.result = ''
+            this.updateDisplay('0')
+        },
+    }
+
+    const digitCmd = (digit) => ({
+        execute: () => {
+            if (calc.num1.length >= 24) return
+            if (calc.num1 === '0') {
+                if (digit === '0') return
+                calc.num1 = digit
+            } else {
+                calc.num1 += digit
+            }
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
+    const operationCmd = (operator) => ({
+        execute: () => {
+            calc.num2 = calc.num1
+            calc.num1 = ''
+            calc.op = operator
+            calc.updateDisplay(operator)
+        },
+    })
+
+    const equalCmd = () => ({
+        execute: () => {
+            const { num1, num2, op } = calc
+            let result = ''
+            switch (op) {
+                case '+':
+                    result = Number(num2) + Number(num1)
+                    break
+                case '-':
+                    result = Number(num2) - Number(num1)
+                    break
+                case '*':
+                    result = Number(num2) * Number(num1)
+                    break
+                case '/':
+                    result = Number(num2) / Number(num1)
+                    break
+                default:
+                    return
+            }
+            calc.result = result
+            calc.num1 = String(result)
+            calc.num2 = ''
+            calc.op = ''
+            calc.updateDisplay(result)
+        },
+    })
+
+    const dotCmd = () => ({
+        execute: () => {
+            if (!calc.num1.includes('.')) {
+                calc.num1 += calc.num1 ? '.' : '0.'
+                calc.updateDisplay(calc.num1)
+            }
+        },
+    })
+
+    const plusMinusCmd = () => ({
+        execute: () => {
+            if (calc.num1) {
+                calc.num1 = String(-Number(calc.num1))
+                calc.updateDisplay(calc.num1)
+            }
+        },
+    })
+
+    const percentCmd = () => ({
+        execute: () => {
+            let percentValue
+            if (calc.op === '+' || calc.op === '-') {
+                percentValue = (calc.num1 * calc.num2) / 100
+            } else {
+                percentValue = calc.num1 / 100
+            }
+            calc.num1 = String(percentValue)
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
+    const clearCmd = () => ({
+        execute: () => calc.clear(),
+    })
 
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
-            btn.blur()
             const action = btn.dataset.action
             const value = btn.textContent
+            let command = null
 
             if (!action) {
-                if (num1.length >= 8) return
-                if (num1 === '0') {
-                    if (value === '0') return
-                    num1 = value
-                } else {
-                    num1 = num1 + value
-                }
-                display.textContent = num1
-            } else if (action === 'ac') {
-                num1 = ''
-                num2 = ''
-                op = 'ac'
-                res = '0'
-                display.textContent = '0'
-            } else if (action === 'plus') {
-                num2 = num1
-                num1 = ''
-                op = '+'
-                display.textContent = value
-            } else if (action === 'minus') {
-                num2 = num1
-                num1 = ''
-                op = '-'
-                display.textContent = value
-            } else if (action === 'divide') {
-                num2 = num1
-                num1 = ''
-                op = '/'
-                display.textContent = value
-            } else if (action === 'multiply') {
-                num2 = num1
-                num1 = ''
-                op = '*'
-                display.textContent = value
-            } else if (action === 'dot' && !String(num1).includes('.')) {
-                num1 = num1 + (num1 ? '.' : '0.')
-                display.textContent = num1
-            } else if (action === 'plusMinus') {
-                num1 = -num1
-                display.textContent = num1
-            } else if (action === 'percent' && !String(num1).includes('.')) {
-                if (op === '+' || op === '-') {
-                    num1 = (num1 * num2) / 100
-                } else {
-                    num1 = num1 / 100
-                }
-                display.textContent = num1
-            } else if (action === 'equal') {
-                switch (op) {
-                    case '*':
-                        res = Number(num2) * Number(num1)
+                command = digitCmd(value)
+            } else {
+                switch (action) {
+                    case 'plus':
+                        command = operationCmd('+')
                         break
-                    case '-':
-                        res = Number(num2) - Number(num1)
+                    case 'minus':
+                        command = operationCmd('-')
                         break
-                    case '/':
-                        res = Number(num2) / Number(num1)
+                    case 'multiply':
+                        command = operationCmd('*')
                         break
-                    case '+':
-                        res = Number(num2) + Number(num1)
+                    case 'divide':
+                        command = operationCmd('/')
+                        break
+                    case 'equal':
+                        command = equalCmd()
+                        break
+                    case 'dot':
+                        command = dotCmd()
+                        break
+                    case 'plus-minus':
+                        command = plusMinusCmd()
+                        break
+                    case 'percent':
+                        command = percentCmd()
+                        break
+                    case 'ac':
+                        command = clearCmd()
                         break
                 }
-
-                num1 = String(res)
-                num2 = ''
-                op = ''
-                display.textContent = res
             }
-            // console.log(
-            //     'num1: ' +
-            //         num1 +
-            //         typeof num1 +
-            //         ' op: ' +
-            //         op +
-            //         ' num2: ' +
-            //         num2 +
-            //         typeof num2 +
-            //         ' res: ' +
-            //         res
-            // )
+
+            if (command) command.execute()
+            btn.blur()
         })
     })
 
