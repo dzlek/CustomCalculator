@@ -1,5 +1,5 @@
 export const initCalculator = () => {
-    // NOTE:   коренеь квадратный, корень кубический, корень степени y
+    // NOTE:   коренеь квадратный, корень кубический
 
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
@@ -36,6 +36,8 @@ export const initCalculator = () => {
                 return numB !== 0 ? numA / numB : 'Error'
             case 'power':
                 return xPowerY(numA, numB)
+            case 'nth-root':
+                return nthRoot(numA, numB)
             default:
                 return ''
         }
@@ -189,6 +191,36 @@ export const initCalculator = () => {
         },
     })
 
+    function nthRoot(x, y) {
+        if (y <= 0 || (x < 0 && y % 2 === 0)) return 'Error'
+
+        let guess = x / y
+        const epsilon = 1e-10
+
+        const absDiff = (a, b) => (a > b ? a - b : b - a)
+
+        while (absDiff(xPowerY(guess, y), x) > epsilon) {
+            guess = ((y - 1) * guess + x / xPowerY(guess, y - 1)) / y
+        }
+
+        return guess
+    }
+
+    const nthRootCmd = () => ({
+        execute: () => {
+            if (calc.num1 && calc.num2 && calc.op) {
+                const result = calculate(calc.num2, calc.num1, calc.op)
+                calc.num2 = String(result)
+                calc.num1 = ''
+            } else {
+                calc.num2 = calc.num1
+                calc.num1 = ''
+            }
+            calc.op = 'nth-root'
+            calc.updateDisplay('√')
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -240,6 +272,9 @@ export const initCalculator = () => {
                         break
                     case 'inverse':
                         command = inverseCmd()
+                        break
+                    case 'nth-root':
+                        command = nthRootCmd()
                         break
                     case 'ac':
                         command = clearCmd()
