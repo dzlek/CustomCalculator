@@ -1,5 +1,5 @@
 export const initCalculator = () => {
-    // NOTE: x в степени y, 1 / x, коренеь квадратный, корень кубический, корень степени y,факториал.
+    // NOTE:  1 / x, коренеь квадратный, корень кубический, корень степени y,факториал.
 
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
@@ -34,6 +34,8 @@ export const initCalculator = () => {
                 return numA * numB
             case '/':
                 return numB !== 0 ? numA / numB : 'Error'
+            case 'power':
+                return xPowerY(numA, numB)
             default:
                 return ''
         }
@@ -157,6 +159,15 @@ export const initCalculator = () => {
         },
     })
 
+    const powerCmd = () => ({
+        execute: () => {
+            calc.num2 = calc.num1
+            calc.num1 = ''
+            calc.op = 'power'
+            calc.updateDisplay('^')
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -200,6 +211,9 @@ export const initCalculator = () => {
                     case 'ten-power':
                         command = tenPowerCmd()
                         break
+                    case 'power':
+                        command = powerCmd()
+                        break
                     case 'ac':
                         command = clearCmd()
                         break
@@ -225,6 +239,7 @@ export const initCalculator = () => {
             Delete: 'ac',
             ',': 'dot',
             '.': 'dot',
+            '^': 'power',
         }
 
         if (!isNaN(key)) {
