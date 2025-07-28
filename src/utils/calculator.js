@@ -1,5 +1,5 @@
 export const initCalculator = () => {
-    // NOTE:  1 / x, коренеь квадратный, корень кубический, корень степени y
+    // NOTE:   коренеь квадратный, корень кубический, корень степени y
 
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
@@ -159,6 +159,14 @@ export const initCalculator = () => {
         },
     })
 
+    const inverseCmd = () => ({
+        execute: () => {
+            if (Number(calc.num1) === 0) return
+            calc.num1 = String(1 / Number(calc.num1))
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
     const powerCmd = () => ({
         execute: () => {
             calc.num2 = calc.num1
@@ -171,11 +179,7 @@ export const initCalculator = () => {
     const factorialCmd = () => ({
         execute: () => {
             const n = Number(calc.num1)
-            if (n < 0 || n % 1 !== 0) {
-                calc.updateDisplay('Error')
-                calc.num1 = ''
-                return
-            }
+            if (n < 0 || n % 1 !== 0) return
             let result = 1
             for (let i = 2; i <= n; i++) {
                 result *= i
@@ -233,6 +237,9 @@ export const initCalculator = () => {
                         break
                     case 'factorial':
                         command = factorialCmd()
+                        break
+                    case 'inverse':
+                        command = inverseCmd()
                         break
                     case 'ac':
                         command = clearCmd()
