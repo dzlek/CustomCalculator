@@ -5,7 +5,7 @@
     "description": "https://drive.google.com/file/d/15jVnBPXaZrjs99KOUxp4TGq6Inau6xq_/view",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
         "build": "webpack --mode production",
         "dev": "webpack serve --mode development",
         "lint": "eslint src --ext .js",
@@ -24,6 +24,7 @@
         "globals": "^16.2.0",
         "html-webpack-plugin": "^5.6.3",
         "husky": "^9.1.7",
+        "jest": "^30.0.5",
         "prettier": "^3.5.3",
         "sass": "^1.89.0",
         "sass-loader": "^16.0.5",
