@@ -85,12 +85,12 @@ body {
             background: var(--button-action);
         }
 
-        > button:nth-child(n + 1):nth-child(-n + 9),
-        > button:nth-child(n + 11):nth-child(-n + 16),
-        > button:nth-child(n + 21):nth-child(-n + 26),
-        > button:nth-child(n + 31):nth-child(-n + 36),
-        > button:nth-child(n + 41):nth-child(-n + 46) {
-            background: var(--button-secondary);
+        > button:nth-child(n + 3):nth-child(-n + 9),
+        > button:nth-child(n + 12):nth-child(-n + 14),
+        > button:nth-child(n + 21):nth-child(-n + 24),
+        > button:nth-child(n + 31):nth-child(-n + 31),
+        > button:nth-child(16) {
+            background: var(--button-action);
         }
     }
 }
