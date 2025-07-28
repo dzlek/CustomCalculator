@@ -20,9 +20,26 @@ export const initCalculator = () => {
         },
     }
 
+    const calculate = (a, b, op) => {
+        const numA = Number(a)
+        const numB = Number(b)
+        switch (op) {
+            case '+':
+                return numA + numB
+            case '-':
+                return numA - numB
+            case '*':
+                return numA * numB
+            case '/':
+                return numB !== 0 ? numA / numB : 'Error'
+            default:
+                return ''
+        }
+    }
+
     const digitCmd = (digit) => ({
         execute: () => {
-            if (calc.num1.length >= 24) return
+            if (calc.num1.length >= 15) return
             if (calc.num1 === '0') {
                 if (digit === '0') return
                 calc.num1 = digit
@@ -35,38 +52,39 @@ export const initCalculator = () => {
 
     const operationCmd = (operator) => ({
         execute: () => {
-            calc.num2 = calc.num1
-            calc.num1 = ''
-            calc.op = operator
-            calc.updateDisplay(operator)
+            if (calc.num1 && calc.num2 && calc.op) {
+                const result = calculate(calc.num2, calc.num1, calc.op)
+                calc.num2 = String(result)
+                calc.num1 = ''
+                calc.op = operator
+                calc.updateDisplay(calc.num2)
+            } else {
+                calc.num2 = calc.num1
+                calc.num1 = ''
+                calc.op = operator
+                calc.updateDisplay(operator)
+            }
         },
     })
 
     const equalCmd = () => ({
         execute: () => {
             const { num1, num2, op } = calc
-            let result = ''
-            switch (op) {
-                case '+':
-                    result = Number(num2) + Number(num1)
-                    break
-                case '-':
-                    result = Number(num2) - Number(num1)
-                    break
-                case '*':
-                    result = Number(num2) * Number(num1)
-                    break
-                case '/':
-                    result = Number(num2) / Number(num1)
-                    break
-                default:
-                    return
-            }
+            if (!num1 || !num2 || !op) return
+
+            const result = calculate(num2, num1, op)
             calc.result = result
             calc.num1 = String(result)
             calc.num2 = ''
             calc.op = ''
             calc.updateDisplay(result)
+
+            console.log(
+                `num2: ${num2} (${typeof num2}) ` +
+                    `op: ${op} ` +
+                    `num1: ${num1} (${typeof num1}) ` +
+                    `= result: ${result}`
+            )
         },
     })
 
