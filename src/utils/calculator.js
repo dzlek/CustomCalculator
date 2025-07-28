@@ -123,6 +123,13 @@ export const initCalculator = () => {
         execute: () => calc.clear(),
     })
 
+    const squareCmd = () => ({
+        execute: () => {
+            calc.num1 = String(Number(calc.num1) * Number(calc.num1))
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
@@ -156,6 +163,9 @@ export const initCalculator = () => {
                         break
                     case 'percent':
                         command = percentCmd()
+                        break
+                    case 'square':
+                        command = squareCmd()
                         break
                     case 'ac':
                         command = clearCmd()
