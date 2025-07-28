@@ -1,6 +1,4 @@
 export const initCalculator = () => {
-    // NOTE:   коренеь квадратный, корень кубический
-
     const display = document.getElementById('display')
     const buttons = document.querySelectorAll('.buttons button')
 
@@ -203,7 +201,7 @@ export const initCalculator = () => {
             guess = ((y - 1) * guess + x / xPowerY(guess, y - 1)) / y
         }
 
-        return guess
+        return parseFloat(guess.toFixed(10))
     }
 
     const nthRootCmd = () => ({
@@ -218,6 +216,24 @@ export const initCalculator = () => {
             }
             calc.op = 'nth-root'
             calc.updateDisplay('√')
+        },
+    })
+
+    const sqrtCmd = () => ({
+        execute: () => {
+            const x = Number(calc.num1)
+            const result = nthRoot(x, 2)
+            calc.num1 = String(result)
+            calc.updateDisplay(calc.num1)
+        },
+    })
+
+    const cbrtCmd = () => ({
+        execute: () => {
+            const x = Number(calc.num1)
+            const result = nthRoot(x, 3)
+            calc.num1 = String(result)
+            calc.updateDisplay(calc.num1)
         },
     })
 
@@ -275,6 +291,12 @@ export const initCalculator = () => {
                         break
                     case 'nth-root':
                         command = nthRootCmd()
+                        break
+                    case 'sqrt':
+                        command = sqrtCmd()
+                        break
+                    case 'cbrt':
+                        command = cbrtCmd()
                         break
                     case 'ac':
                         command = clearCmd()
