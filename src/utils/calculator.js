@@ -1,7 +1,7 @@
 import { xPowerY, nthRoot, factorial } from './math'
 export const initCalculator = () => {
-    const display = document.getElementById('display')
-    const buttons = document.querySelectorAll('.buttons button')
+    const display = document.getElementById('calc-display')
+    const buttons = document.querySelectorAll('.calc-btn')
 
     const calc = {
         num1: '',
