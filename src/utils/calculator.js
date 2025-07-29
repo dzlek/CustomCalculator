@@ -1,4 +1,5 @@
 import { xPowerY, nthRoot, factorial } from './math'
+
 export const initCalculator = () => {
     const display = document.getElementById('calc-display')
     const buttons = document.querySelectorAll('.calc-btn')
@@ -22,27 +23,6 @@ export const initCalculator = () => {
         },
     }
 
-    const calculate = (a, b, op) => {
-        const numA = Number(a)
-        const numB = Number(b)
-        switch (op) {
-            case '+':
-                return numA + numB
-            case '-':
-                return numA - numB
-            case '*':
-                return numA * numB
-            case '/':
-                return numB !== 0 ? numA / numB : 'Error'
-            case 'power':
-                return xPowerY(numA, numB)
-            case 'nth-root':
-                return nthRoot(numA, numB)
-            default:
-                return ''
-        }
-    }
-
     const digitCmd = (digit) => ({
         execute: () => {
             if (calc.num1.length >= 15) return
@@ -56,29 +36,39 @@ export const initCalculator = () => {
         },
     })
 
-    const operationCmd = (operator) => ({
-        execute: () => {
-            if (calc.num1 && calc.num2 && calc.op) {
-                const result = calculate(calc.num2, calc.num1, calc.op)
-                calc.num2 = String(result)
-                calc.num1 = ''
-                calc.op = operator
-                calc.updateDisplay(calc.num2)
-            } else {
-                calc.num2 = calc.num1
-                calc.num1 = ''
-                calc.op = operator
-                calc.updateDisplay(operator)
-            }
-        },
-    })
-
     const equalCmd = () => ({
         execute: () => {
             const { num1, num2, op } = calc
             if (!num1 || !num2 || !op) return
 
-            const result = calculate(num2, num1, op)
+            const a = Number(num2)
+            const b = Number(num1)
+
+            let result
+
+            switch (op) {
+                case '+':
+                    result = a + b
+                    break
+                case '-':
+                    result = a - b
+                    break
+                case '*':
+                    result = a * b
+                    break
+                case '/':
+                    result = b !== 0 ? a / b : 'Error'
+                    break
+                case 'power':
+                    result = xPowerY(a, b)
+                    break
+                case 'nth-root':
+                    result = nthRoot(a, b)
+                    break
+                default:
+                    result = ''
+            }
+
             calc.result = result
             calc.num1 = String(result)
             calc.num2 = ''
@@ -182,7 +172,7 @@ export const initCalculator = () => {
     const nthRootCmd = () => ({
         execute: () => {
             if (calc.num1 && calc.num2 && calc.op) {
-                const result = calculate(calc.num2, calc.num1, calc.op)
+                const result = nthRoot(Number(calc.num2), Number(calc.num1))
                 calc.num2 = String(result)
                 calc.num1 = ''
             } else {
@@ -239,86 +229,101 @@ export const initCalculator = () => {
         },
     })
 
+    const plusCmd = () => ({
+        execute: () => {
+            if (calc.num1 && calc.num2 && calc.op) {
+                const result = Number(calc.num2) + Number(calc.num1)
+                calc.num2 = String(result)
+                calc.num1 = ''
+            } else {
+                calc.num2 = calc.num1
+                calc.num1 = ''
+            }
+            calc.op = '+'
+            calc.updateDisplay('+')
+        },
+    })
+
+    const minusCmd = () => ({
+        execute: () => {
+            if (calc.num1 && calc.num2 && calc.op) {
+                const result = Number(calc.num2) - Number(calc.num1)
+                calc.num2 = String(result)
+                calc.num1 = ''
+            } else {
+                calc.num2 = calc.num1
+                calc.num1 = ''
+            }
+            calc.op = '-'
+            calc.updateDisplay('-')
+        },
+    })
+
+    const multiplyCmd = () => ({
+        execute: () => {
+            if (calc.num1 && calc.num2 && calc.op) {
+                const result = Number(calc.num2) * Number(calc.num1)
+                calc.num2 = String(result)
+                calc.num1 = ''
+            } else {
+                calc.num2 = calc.num1
+                calc.num1 = ''
+            }
+            calc.op = '*'
+            calc.updateDisplay('*')
+        },
+    })
+
+    const divideCmd = () => ({
+        execute: () => {
+            if (calc.num1 && calc.num2 && calc.op) {
+                const result =
+                    Number(calc.num1) !== 0
+                        ? Number(calc.num2) / Number(calc.num1)
+                        : 'Error'
+                calc.num2 = String(result)
+                calc.num1 = ''
+            } else {
+                calc.num2 = calc.num1
+                calc.num1 = ''
+            }
+            calc.op = '/'
+            calc.updateDisplay('/')
+        },
+    })
+
+    const actionsMap = {
+        plus: plusCmd,
+        minus: minusCmd,
+        multiply: multiplyCmd,
+        divide: divideCmd,
+        equal: equalCmd,
+        dot: dotCmd,
+        'plus-minus': plusMinusCmd,
+        percent: percentCmd,
+        square: squareCmd,
+        cube: cubeCmd,
+        'ten-power': tenPowerCmd,
+        power: powerCmd,
+        factorial: factorialCmd,
+        inverse: inverseCmd,
+        'nth-root': nthRootCmd,
+        sqrt: sqrtCmd,
+        cbrt: cbrtCmd,
+        ac: clearCmd,
+        mc: memoryClearCmd,
+        'm-plus': memoryPlusCmd,
+        'm-minus': memoryMinusCmd,
+        'm-recall': memoryRecallCmd,
+    }
+
     buttons.forEach((btn) => {
         btn.addEventListener('click', () => {
             const action = btn.dataset.action
             const value = btn.textContent
-            let command = null
 
-            if (!action) {
-                command = digitCmd(value)
-            } else {
-                switch (action) {
-                    case 'plus':
-                        command = operationCmd('+')
-                        break
-                    case 'minus':
-                        command = operationCmd('-')
-                        break
-                    case 'multiply':
-                        command = operationCmd('*')
-                        break
-                    case 'divide':
-                        command = operationCmd('/')
-                        break
-                    case 'equal':
-                        command = equalCmd()
-                        break
-                    case 'dot':
-                        command = dotCmd()
-                        break
-                    case 'plus-minus':
-                        command = plusMinusCmd()
-                        break
-                    case 'percent':
-                        command = percentCmd()
-                        break
-                    case 'square':
-                        command = squareCmd()
-                        break
-                    case 'cube':
-                        command = cubeCmd()
-                        break
-                    case 'ten-power':
-                        command = tenPowerCmd()
-                        break
-                    case 'power':
-                        command = powerCmd()
-                        break
-                    case 'factorial':
-                        command = factorialCmd()
-                        break
-                    case 'inverse':
-                        command = inverseCmd()
-                        break
-                    case 'nth-root':
-                        command = nthRootCmd()
-                        break
-                    case 'sqrt':
-                        command = sqrtCmd()
-                        break
-                    case 'cbrt':
-                        command = cbrtCmd()
-                        break
-                    case 'ac':
-                        command = clearCmd()
-                        break
-                    case 'mc':
-                        command = memoryClearCmd()
-                        break
-                    case 'm-plus':
-                        command = memoryPlusCmd()
-                        break
-                    case 'm-minus':
-                        command = memoryMinusCmd()
-                        break
-                    case 'm-recall':
-                        command = memoryRecallCmd()
-                        break
-                }
-            }
+            action ? actionsMap[action]().execute() : digitCmd(value).execute()
 
-            if (command) command.execute()
             btn.blur()
         })
     })
